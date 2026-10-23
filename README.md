@@ -68,7 +68,3 @@ npm run validate
 
 餐品插画通过内置 imagegen 工具生成，落盘为 `site/public/art.png`；原始提示词与用途见 [docs/ARTWORK.md](docs/ARTWORK.md)。卡框、排版和交互为代码实现，未复制第三方卡牌素材。餐品画面为风格化示意，非官方商品照片。
 
-
-## 上传与报名
-
-项目当前的核验结果、上传快照生成、GitHub 推送命令和报名模板见 [上传与报名操作](docs/UPLOAD_AND_REGISTER.md)。
