@@ -1,0 +1,6 @@
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+const files={'/':['public/index.html','text/html; charset=utf-8'],'/style.css':['public/style.css','text/css'],'/app.js':['public/app.js','text/javascript'],'/rules.js':['src/rules.js','text/javascript'],'/sync.js':['src/sync.js','text/javascript'],'/art.png':['public/art.png','image/png']};
+const assets={};for(const [route,[file,type]] of Object.entries(files)) assets[route]={type,body:(await readFile(file)).toString('base64')};
+const backend=(await readFile('src/mcp.js','utf8')).replace(/export /g,'');
+const source=`${backend}\nconst assets=${JSON.stringify(assets)};\nexport default {async fetch(request){const path=new URL(request.url).pathname;if(path==='/api/mcp')return api(request);const a=assets[path];if(!a)return new Response('Not found',{status:404});return new Response(Uint8Array.from(atob(a.body),c=>c.charCodeAt(0)),{headers:{'Content-Type':a.type,'X-Content-Type-Options':'nosniff'}})}};`;
+await writeFile('worker/index.js',source);await mkdir('dist/server',{recursive:true});await mkdir('dist/.openai',{recursive:true});await writeFile('dist/server/index.js',source);await writeFile('dist/.openai/hosting.json',await readFile('.openai/hosting.json'));console.log('Built full application: frontend + isolated MCP backend');
