@@ -1,0 +1,1 @@
+{"name":"mcd-card-collection","version":"1.0.0","private":true,"scripts":{"start":"npm --prefix site start","dev":"npm --prefix site run dev","build":"npm --prefix site run build","test":"npm --prefix site test"},"engines":{"node":">=22"}}
